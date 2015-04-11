@@ -2,38 +2,39 @@
 #include <string>
 #include "src/vHeap/vHeap.h"
 #include "src/vHeap/vRef.h"
+#include "src/vHeap/metadata.h"
 using namespace std;
 
-struct datosvMalloc {
-	int ID;				//Identificador
-	void* posicion;			//Posicion del dato
-	string tipo;			//Tipo de dato
-	int tamano;			//Tamano del dato
-	bool bandera;			//Bandera de uso
-	int contador;			//Contador de referencia
-};
-
 int main() {
-	string tipo = "int";
-
-//	datosvMalloc datos;
-//	datos.ID = 1;
-//	datos.tipo = tipo;
-//	datos.tamano = 10;
-//	datos.posicion = 0;
-//	datos.contador = 1;
-//	datos.bandera = false;
-//
-//	datosvMalloc sec = datos;
-//	cout << datos.ID << endl;
-//	cout << sec.ID << endl;
 
 	vHeap* heap = vHeap::getInstance();
 
+	char tipo = 'a';
 
 	vRef ref1 = heap->vMalloc(10, tipo);
+	vRef ref2 = heap->vMalloc(100, tipo);
+	vRef ref3 = heap->vMalloc(500, tipo);
+
+	Metadata* meta = heap->busquedaDato(1);
+	Metadata* meta1 = heap->busquedaDato(2);
+	Metadata* meta2 = heap->busquedaDato(3);
+
+	cout << "*****************************" << endl;
+	cout << "ID: " << meta->getID() << endl;
+	cout << "Posicion: " << meta->getPos() << endl;
+	cout << "Tamano: " << meta->getTamano() << endl;
+	cout << "TIpo: " << meta->getTipo() << endl;
+	cout << "*****************************" << endl;
+	cout << "ID: " << meta1->getID() << endl;
+	cout << "Posicion: " << meta1->getPos() << endl;
+	cout << "Tamano: " << meta1->getTamano() << endl;
+	cout << "TIpo: " << meta1->getTipo() << endl;
+	cout << "*****************************" << endl;
+	cout << "ID: " << meta2->getID() << endl;
+	cout << "Posicion: " << meta2->getPos() << endl;
+	cout << "Tamano: " << meta2->getTamano() << endl;
+	cout << "TIpo: " << meta2->getTipo() << endl;
 
 	heap->~vHeap();
-	free(heap);
 	return 0;
 }

@@ -11,19 +11,13 @@ using namespace std;
  * 	@param t Tipo del dato
  * 	@param tam Tamano del dato
  */
-Metadata::Metadata(int id, void* pos, string t, int tam) {
-	ID = (int*) malloc(sizeof(int));
-	tipo = (string*) malloc(20);
-	tamano = (int*) malloc(sizeof(int));
-	bandera = (bool*)malloc(sizeof(bool));
-	contador = (int*)malloc(sizeof(int));
-
-	*ID = id;
+Metadata::Metadata(int id, void* pos, char t, int tam) {
+	ID = id;
 	posicion = pos;
-	*tipo = t;
-	*tamano = tam;
-	*bandera = false;
-	*contador = 1;
+	tipo = t;
+	tamano = tam;
+	bandera = false;
+	contador = 1;
 }
 
 /**
@@ -40,7 +34,7 @@ Metadata::Metadata(int id, void* pos, string t, int tam) {
  * 	@brief Obtener identificador
  */
 int Metadata::getID() {
-	return *ID;
+	return ID;
 }
 
 /**
@@ -53,15 +47,15 @@ void* Metadata::getPos() {
 /**
  * 	@brief Obtener tipo
  */
-string Metadata::getTipo() {
-	return *tipo;
+char Metadata::getTipo() {
+	return tipo;
 }
 
 /**
  * 	@brief Obtener tamano
  */
 int Metadata::getTamano() {
-	return *tamano;
+	return tamano;
 }
 
 /**

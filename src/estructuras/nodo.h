@@ -7,18 +7,19 @@ using namespace std;
 template<class T> class Nodo {
 public:
 	Nodo(T dato);									//Constructor
-	Nodo(T* dato, Nodo* siguiente);					//Constructor
-	Nodo(T* dato, Nodo* siguiente, Nodo* anterior);	//Constructor
-	~Nodo();										//Destructor
+//	~Nodo();										//Destructor
 	T* getDato();								//Obtener dato dentro del nodo
 	Nodo<T>* getSiguiente();						//Obtener nodo siguiente
 	Nodo<T>* getAnterior();							//Obtener nodo anterior
 	void setSiguiente(Nodo* sig);					//Asigna nodo siguiente
 	void setAnterior(Nodo* ant);					//Asigna nodo anterior
+	int getIndice();
+	void setIndice(int num);
 private:
 	T* atributo;
 	Nodo<T>* anterior;
 	Nodo<T>* siguiente;
+	int indice;
 };
 
 /**
@@ -29,32 +30,8 @@ template<class T> Nodo<T>::Nodo(T dato) {
 	atributo = (T*) malloc(sizeof(dato));
 	*atributo = dato;
 	anterior = siguiente = 0;
+	indice = 0;
 	cout << "hgfh" << endl;
-}
-
-/**
- *	@brief Constructor del nodo
- *	@param dato Dato a almacenar en nodo
- *	@param sig Nodo siguiente
- */
-template<class T> Nodo<T>::Nodo(T* dato, Nodo* sig) {
-	atributo = malloc(sizeof(dato));
-	*atributo = dato;
-	siguiente = sig;
-	anterior = 0;
-}
-
-/**
- *	@brief Constructor del nodo
- *	@param dato Dato a almacenar en nodo
- *	@param sig Nodo siguiente
- *	@param ant Nodo anterior
- */
-template<class T> Nodo<T>::Nodo(T* dato, Nodo* sig, Nodo* ant) {
-	atributo = malloc(sizeof(dato));
-	*atributo = dato;
-	siguiente = sig;
-	anterior = ant;
 }
 
 /**
@@ -67,26 +44,22 @@ template<class T> T* Nodo<T>::getDato() {
 /**
  * 	@brief Destructor del nodo
  */
-template<class T> Nodo<T>::~Nodo() {
-	free(atributo);
-	free(siguiente);
-	free(anterior);
-}
+//template<class T> Nodo<T>::~Nodo() {
+//	delete this;
+//}
 
 /**
  * 	@brief Obtiene el nodo siguiente
  */
 template<class T> void Nodo<T>::setSiguiente(Nodo<T>* sig) {
-	siguiente = (Nodo<T>*)malloc(sizeof(sig));
-	*siguiente = *sig;
+	siguiente = sig;
 }
 
 /**
  * 	@brief Obtiene el nodo anterior
  */
 template<class T> void Nodo<T>::setAnterior(Nodo<T>* ant) {
-	anterior = (Nodo<T>*)malloc(sizeof(ant));
-	*anterior = *ant;
+	anterior = ant;
 }
 
 /**
@@ -101,6 +74,14 @@ template<class T> Nodo<T>* Nodo<T>::getSiguiente() {
  */
 template<class T> Nodo<T>* Nodo<T>::getAnterior() {
 	return anterior;
+}
+
+template<class T> void Nodo<T>::setIndice(int ind){
+	indice = ind;
+}
+
+template<class T> int Nodo<T>::getIndice(){
+	return indice;
 }
 
 #endif /* NODO_H_ */

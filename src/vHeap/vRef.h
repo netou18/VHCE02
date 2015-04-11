@@ -5,10 +5,11 @@
 
 class vRef {
 private:
-	int* ID;
+	int ID;
 public:
 	vRef(int id);
 	~vRef();
+	int getID();
 //	vObject operator*();
 //	void operator=(vRef ref);
 //	void operator=(vObject objeto);

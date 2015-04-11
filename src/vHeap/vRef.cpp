@@ -11,12 +11,15 @@
 using namespace std;
 
 vRef::vRef(int id) {
-	cout << "Creando puntero..." << endl;
-	ID = (int*)malloc(sizeof(int));
-	*ID = id;
+	cout << "Creando puntero...ID: " << id << endl;
+	ID = id;
 	cout << "Puntero creado." << endl;
 }
 
 vRef::~vRef() {
+}
+
+int vRef::getID(){
+	return ID;
 }
 

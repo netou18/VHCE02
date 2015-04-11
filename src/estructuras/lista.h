@@ -22,6 +22,10 @@ private:
 	Nodo<T>* primer;				//Primer nodo de la lista
 	Nodo<T>* ultimo;				//Ultimo nodo de la lista
 	bool vacia();					//Verifica si esta vacia la lista
+	int contador;
+	void borrarElemento(int ind);
+	void sumInd(Nodo<T>* nodo);
+	void resInd(Nodo<T>* nodo);
 };
 
 /**
@@ -29,6 +33,7 @@ private:
  */
 template<class T> Lista<T>::Lista() {
 	primer = ultimo = 0;
+	contador = 0;
 }
 
 /**
@@ -50,10 +55,15 @@ template<class T> void Lista<T>::insertarFinal(T dato) {
 	cout << "Nodo creado." << endl;
 	if (vacia()) {
 		primer = ultimo = nodo;
+		nodo->setIndice(0);
+		contador++;
 	} else {
 		nodo->setAnterior(ultimo);
 		ultimo->setSiguiente(nodo);
+		cout << "por aqui" << endl;
 		ultimo = nodo;
+		nodo->setIndice(contador);
+		contador++;
 	}
 }
 
@@ -66,10 +76,47 @@ template<class T> void Lista<T>::insertarInicio(T dato) {
 	new (nodo) Nodo<T>(dato);
 	if (vacia()) {
 		primer = ultimo = nodo;
+		nodo->setIndice(0);
+		contador++;
 	} else {
 		nodo->setSiguiente(primer);
 		primer->setAnterior(nodo);
+		sumInd(primer);
 		primer = nodo;
+		contador++;
+	}
+}
+
+template<class T> void Lista<T>::borrarElemento(int ind){
+	Nodo<T>* actual = primer;
+	while(actual != 0){
+		if(((int) actual->getIndice()) != ind){
+			actual = actual->getSiguiente();
+		}
+		else {
+			resInd(actual->getSiguiente());
+			Nodo<T>* aux = actual->getAnterior();
+			aux->setSiguiente(actual->getSiguiente());
+			aux = actual->getSiguiente();
+			aux->setAnterior(actual->setAnterior());
+			actual->~Nodo();
+		}
+	}
+}
+
+template<class T> void Lista<T>::sumInd(Nodo<T>* nodo){
+	Nodo<T>* actual = nodo;
+	while(actual != 0){
+		actual->setIndice(actual->getIndice()+1);
+		actual = actual->getSiguiente();
+	}
+}
+
+template<class T> void Lista<T>::resInd(Nodo<T>* nodo){
+	Nodo<T>* actual = nodo;
+	while(actual != 0){
+		actual->setIndice(actual->getIndice()-1);
+		actual = actual->getSiguiente();
 	}
 }
 
