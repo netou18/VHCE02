@@ -5,15 +5,16 @@
  *      Author: ernesto
  */
 
-#include "vRef.h"
+#include "../vheap/vRef.h"
+
 #include <iostream>
 #include <stdlib.h>
+#include <fstream>
+
 using namespace std;
 
 vRef::vRef(int id) {
-	cout << "Creando puntero...ID: " << id << endl;
 	ID = id;
-	cout << "Puntero creado." << endl;
 }
 
 vRef::~vRef() {

@@ -1,0 +1,51 @@
+Ernesto Ulate Ramírez 2014092260
+
+09/4/15
+	Reinicio en la elaboración del proyecto. Esta vez sólo yo como integrante.
+	Ya había investigado y aclarado dudas sobre el proyecto. 
+	Planeación del proyecto. Creación de tareas y establecer prioridad.
+	Generación de estructuras de datos para la elaboración del proyecto.
+10/4/15
+	Continuación con la creación de código sobre estructuras de datos.
+	Pruebas y depuración de las estructuras.
+	Comienzo con la elaboración de la clase vHeap.
+	Generación de código necesario así como clases necesarias: vRef, vObject, metadata.
+	Creación de objetos metadata y agregando a lista enlazada.
+	Depuración de código, tanto de objeto metadata como lista enlazada.
+	Pruebas del vHeap.
+	Utilización de aplicación Valgrind para la detección de errores.
+	Depuración de código, ahora parece funcionar bien.
+	Eliminación de líneas de código innecesarias, tales como los free() mal utilizados.
+	Creación de vMalloc con vRef.
+	Pruebas del vHeap. Parece funcionar correctamente.
+	Impresión de datos del metadata. Correcto.
+	Creación del repositorio en GitHub. Llamado "VHCE02".
+	Primer commit a GitHub. Subida de todo el código creado.
+	Planeamiento otra vez. Establecer prioridades y cambios en código previamente creado para optimización.
+11/4/15
+	Revisión del código. 
+	Creación de clase vDebug para la impresión de texto necesario en un archivo específico.
+	Investigación sobre escritura en archivos.
+	Implementación de la esritura de archivos.
+	Prueba sobre vDebug. Algunos errores (solucionados).
+	Investigación sobre uso de strings. Problemas con ellos.
+	Commit realizado.
+	Creación del vFree().
+	Creación de buscadores en listas enlazadas.
+	Colocar índices a los nodos para facilitar su manipulación.
+	Algoritmos buscadores finalizados.
+	Pruebas con el vHeap. Correcto.
+	Creación de vObject. Comienzo de creación de clases: vInt, vChar, vLong...
+	Creación de lectura del archivo vheap.xml
+	Planear método de lectura y transmisión de datos del xml.
+	Implementación del lector reader.h y reader.cpp
+	Pruebas del reader.
+12/4/15
+	Examen de Física 13/4/15. Retraso en creación de código.
+13/4/15
+	Creación de la documentación del proyecto.
+	Creación de diagrama clases.
+	Estructuración de bitácoras.
+	
+	
+	

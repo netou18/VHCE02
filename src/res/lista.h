@@ -6,6 +6,7 @@
 #include "nodo.h"
 using namespace std;
 
+
 /**
  * 		Lista doblemente enlazada
  */
@@ -18,12 +19,13 @@ public:
 	void print();					//Imprime la lista en consola
 	Nodo<T>* getPrimer();			//Obtener el primer elemento
 	Nodo<T>* getUltimo();			//Obtener el ultimo elemento
+	Nodo<T>* getElemento(int ind);	//Obtener elemento del indice
+	void borrarElemento(int ind);
 private:
 	Nodo<T>* primer;				//Primer nodo de la lista
 	Nodo<T>* ultimo;				//Ultimo nodo de la lista
 	bool vacia();					//Verifica si esta vacia la lista
 	int contador;
-	void borrarElemento(int ind);
 	void sumInd(Nodo<T>* nodo);
 	void resInd(Nodo<T>* nodo);
 };
@@ -49,10 +51,8 @@ template<class T> Lista<T>::~Lista() {
  * 	@param Dato a insetar
  */
 template<class T> void Lista<T>::insertarFinal(T dato) {
-	cout << "Agregando a lista..." << endl;
-	Nodo<T>* nodo = (Nodo<T>*) malloc(sizeof(Nodo<T>));
+	Nodo<T>* nodo = (Nodo<T>*) malloc(sizeof(Nodo<T> ));
 	new (nodo) Nodo<T>(dato);
-	cout << "Nodo creado." << endl;
 	if (vacia()) {
 		primer = ultimo = nodo;
 		nodo->setIndice(0);
@@ -60,7 +60,6 @@ template<class T> void Lista<T>::insertarFinal(T dato) {
 	} else {
 		nodo->setAnterior(ultimo);
 		ultimo->setSiguiente(nodo);
-		cout << "por aqui" << endl;
 		ultimo = nodo;
 		nodo->setIndice(contador);
 		contador++;
@@ -87,35 +86,34 @@ template<class T> void Lista<T>::insertarInicio(T dato) {
 	}
 }
 
-template<class T> void Lista<T>::borrarElemento(int ind){
+template<class T> void Lista<T>::borrarElemento(int ind) {
 	Nodo<T>* actual = primer;
-	while(actual != 0){
-		if(((int) actual->getIndice()) != ind){
+	while (actual != 0) {
+		if (((int) actual->getIndice()) != ind) {
 			actual = actual->getSiguiente();
-		}
-		else {
+		} else {
 			resInd(actual->getSiguiente());
 			Nodo<T>* aux = actual->getAnterior();
 			aux->setSiguiente(actual->getSiguiente());
 			aux = actual->getSiguiente();
-			aux->setAnterior(actual->setAnterior());
-			actual->~Nodo();
+			aux->setAnterior(actual->getAnterior());
+			break;
 		}
 	}
 }
 
-template<class T> void Lista<T>::sumInd(Nodo<T>* nodo){
+template<class T> void Lista<T>::sumInd(Nodo<T>* nodo) {
 	Nodo<T>* actual = nodo;
-	while(actual != 0){
-		actual->setIndice(actual->getIndice()+1);
+	while (actual != 0) {
+		actual->setIndice(actual->getIndice() + 1);
 		actual = actual->getSiguiente();
 	}
 }
 
-template<class T> void Lista<T>::resInd(Nodo<T>* nodo){
+template<class T> void Lista<T>::resInd(Nodo<T>* nodo) {
 	Nodo<T>* actual = nodo;
-	while(actual != 0){
-		actual->setIndice(actual->getIndice()-1);
+	while (actual != 0) {
+		actual->setIndice(actual->getIndice() - 1);
 		actual = actual->getSiguiente();
 	}
 }
@@ -132,6 +130,16 @@ template<class T> Nodo<T>* Lista<T>::getPrimer() {
  */
 template<class T> Nodo<T>* Lista<T>::getUltimo() {
 	return ultimo;
+}
+
+template<class T> Nodo<T>* Lista<T>::getElemento(int ind) {
+	Nodo<T>* actual = primer;
+	while (actual != 0) {
+		if(actual->getIndice()!=ind)
+			actual = actual->getSiguiente();
+		else
+			return actual;
+	}
 }
 
 /**

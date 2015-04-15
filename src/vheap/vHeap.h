@@ -1,10 +1,11 @@
 #ifndef SRC_VHEAP_VHEAP_H_
 #define SRC_VHEAP_VHEAP_H_
 
-#include "vRef.h"
-#include "metadata.h"
-#include "../estructuras/lista.h"
 #include <string>
+
+#include "../res/lista.h"
+#include "../vheap/metadata.h"
+#include "../vheap/vRef.h"
 using namespace std;
 
 class vHeap {
@@ -15,14 +16,14 @@ private:
 	void* memoria;								//Puntero a vHeap
 	void* desplazamiento;						//Posicion del puntero
 	Lista<Metadata>* metadata;					//Metadata
-
 public:
 	~vHeap();									//Destructor
 	vRef vMalloc(int size, char type);			//Malloc virtualizado
 	void vFree(vRef ref);						//Liberador de memoria virtualizado
-	Metadata* busquedaDato(int id);					//Busca el valor de *vRef
+	int busquedaDato(int id);					//Busca el indice del Metadata
+	Metadata* getMetadata(vRef ref);			//Obtener el Metadata
 	void aumentarContador(int id);				//Aumenta contador de referencia
-	void disminuirContador(int id);			//Disminuye contador de referencia
+	void disminuirContador(int id);				//Disminuye contador de referencia
 	static vHeap* getInstance() {				//
 		if (instancia == 0)						//Patron singleton
 			instancia = new vHeap(10, 0.5);		//

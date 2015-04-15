@@ -31,7 +31,6 @@ template<class T> Nodo<T>::Nodo(T dato) {
 	*atributo = dato;
 	anterior = siguiente = 0;
 	indice = 0;
-	cout << "hgfh" << endl;
 }
 
 /**

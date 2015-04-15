@@ -1,7 +1,7 @@
 
 #ifndef SRC_VHEAP_VREF_H_
 #define SRC_VHEAP_VREF_H_
-#include "../vObjects/vObject.h"
+#include "../vobjects/vObject.h"
 
 class vRef {
 private:

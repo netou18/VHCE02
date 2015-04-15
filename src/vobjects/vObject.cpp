@@ -5,7 +5,7 @@
  *      Author: ernesto
  */
 
-#include "vObject.h"
+#include "../vobjects/vObject.h"
 
 vObject::vObject() {
 	// TODO Auto-generated constructor stub

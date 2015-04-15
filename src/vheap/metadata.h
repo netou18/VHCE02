@@ -1,7 +1,6 @@
 #ifndef SRC_VHEAP_METADATA_H_
 #define SRC_VHEAP_METADATA_H_
 
-#include <string>
 using namespace std;
 
 class Metadata {
