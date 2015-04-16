@@ -1,10 +1,10 @@
 #include "../vheap/vHeap.h"
-
+#include "../xml/reader.h"
 #include "../res/vDebug.h"
 #include "../res/lista.h"
 #include <stdlib.h>
 #include <cstring>
-
+#include <pthread.h>
 #include "../vheap/metadata.h"
 using namespace std;
 
@@ -12,15 +12,19 @@ using namespace std;
  * 	@brief Instancia unica del vHeap
  */
 vHeap* vHeap::instancia = 0;
-vDebug* deb = vDebug::getInstance();
+pthread_mutex_t mutex;
 
 /**
  * 	@brief Constructor
  * 	@param size Tamano del vHeap
  * 	@param overweight Sobrecarga del tamano del vHeap
  */
-vHeap::vHeap(int size, float overweight) {
+vHeap::vHeap() {
+	pthread_mutex_lock(&mutex);
+	read = Reader::getInstance();
+	deb = vDebug::getInstance();
 	deb->print(true, "*Creacion de vHeap...");
+	int size = read->getSize(); //float over = read->getOW();
 	contador = (int*) malloc(sizeof(int));
 	*contador = 0;
 	memoria = malloc(size * 1000000);
@@ -28,12 +32,15 @@ vHeap::vHeap(int size, float overweight) {
 	metadata = (Lista<Metadata>*) malloc(sizeof(Lista<Metadata> ));
 	new (metadata) Lista<Metadata>();
 	deb->print(false, "vHeap creado.*");
+	pthread_mutex_unlock(&mutex);
+	pthread_exit(0);
 }
 
 /**
  * 	@brief Busca un elemento en el metadata
  */
 int vHeap::busquedaDato(int id) {
+	pthread_mutex_lock(&mutex);
 	deb->print(true, "Buscando dato en metadata...");
 	Nodo<Metadata>* actual = metadata->getPrimer();
 	while (actual != 0) {
@@ -46,15 +53,23 @@ int vHeap::busquedaDato(int id) {
 			actual = actual->getSiguiente();
 	}
 	deb->print(false, "Dato NO encontrado.");
+	pthread_mutex_unlock(&mutex);
+	pthread_exit(0);
 	return -1;
 }
 
 Metadata* vHeap::getMetadata(vRef ref) {
+	pthread_mutex_lock(&mutex);
 	int indice = busquedaDato(ref.getID());
-	if (indice != -1)
+	if (indice != -1) {
+		pthread_mutex_unlock(&mutex);
+		pthread_exit(0);
 		return metadata->getElemento(indice)->getDato();
-	else
+	} else {
+		pthread_mutex_unlock(&mutex);
+		pthread_exit(0);
 		return 0;
+	}
 }
 
 /**
@@ -63,6 +78,7 @@ Metadata* vHeap::getMetadata(vRef ref) {
  * 	@param tipo Tipo de dato a almacenar
  */
 vRef vHeap::vMalloc(int size, char tipo) {
+	pthread_mutex_lock(&mutex);
 	deb->print(true, "vMalloc...");
 	*contador = *contador + 1;
 	Metadata* meta = new Metadata(*contador, desplazamiento, tipo, size);
@@ -72,13 +88,17 @@ vRef vHeap::vMalloc(int size, char tipo) {
 
 	desplazamiento = desplazamiento + size;
 	deb->print(false, "Espacio creado satisfactoriamente.");
+	pthread_mutex_unlock(&mutex);
+	pthread_exit(0);
 	return vRef(*contador);
 }
 
 void vHeap::vFree(vRef ref) {
+	pthread_mutex_lock(&mutex);
 	int indice = busquedaDato(ref.getID());
 	metadata->borrarElemento(indice);
 	deb->print(true, "Espacio de memoria liberado");
+	pthread_mutex_unlock(&mutex);
 }
 
 /**
