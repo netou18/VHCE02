@@ -20,7 +20,6 @@ pthread_mutex_t mutex;
  * 	@param overweight Sobrecarga del tamano del vHeap
  */
 vHeap::vHeap() {
-	//pthread_mutex_lock(&mutex);
 	read = Reader::getInstance();
 	deb = vDebug::getInstance();
 	deb->print(true, "*Creacion de vHeap...");
@@ -29,11 +28,10 @@ vHeap::vHeap() {
 	*contador = 0;
 	memoria = malloc(size * 1000000);
 	desplazamiento = memoria;
+	posFinal = memoria + (size * 1000000);
 	metadata = (Lista<Metadata>*) malloc(sizeof(Lista<Metadata> ));
 	new (metadata) Lista<Metadata>();
 	deb->print(false, "vHeap creado.*");
-	//pthread_mutex_unlock(&mutex);
-	//pthread_exit(0);
 }
 
 /**

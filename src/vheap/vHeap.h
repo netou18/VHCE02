@@ -10,6 +10,8 @@
 #include "../res/vDebug.h"
 using namespace std;
 
+class Defrag;
+
 class vHeap {
 private:
 	vHeap();									//Constructor principal
@@ -17,6 +19,7 @@ private:
 	int* contador;								//Contador de identificadores
 	void* memoria;								//Puntero a vHeap
 	void* desplazamiento;						//Posicion del puntero
+	void* posFinal;
 	Lista<Metadata>* metadata;					//Metadata
 	Reader* read;
 	vDebug* deb;
@@ -28,6 +31,7 @@ public:
 	int busquedaDato(int id);					//Busca el indice del Metadata
 	Metadata* getMetadata(vRef ref);			//Obtener el Metadata
 	Lista<Metadata>* getDatos();
+	friend class Defrag;
 	static vHeap* getInstance() {				//
 		if (instancia == 0)						//Patron singleton
 			instancia = new vHeap();			//
