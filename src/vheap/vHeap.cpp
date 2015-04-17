@@ -20,7 +20,7 @@ pthread_mutex_t mutex;
  * 	@param overweight Sobrecarga del tamano del vHeap
  */
 vHeap::vHeap() {
-	pthread_mutex_lock(&mutex);
+	//pthread_mutex_lock(&mutex);
 	read = Reader::getInstance();
 	deb = vDebug::getInstance();
 	deb->print(true, "*Creacion de vHeap...");
@@ -32,15 +32,15 @@ vHeap::vHeap() {
 	metadata = (Lista<Metadata>*) malloc(sizeof(Lista<Metadata> ));
 	new (metadata) Lista<Metadata>();
 	deb->print(false, "vHeap creado.*");
-	pthread_mutex_unlock(&mutex);
-	pthread_exit(0);
+	//pthread_mutex_unlock(&mutex);
+	//pthread_exit(0);
 }
 
 /**
  * 	@brief Busca un elemento en el metadata
  */
 int vHeap::busquedaDato(int id) {
-	pthread_mutex_lock(&mutex);
+	//pthread_mutex_lock(&mutex);
 	deb->print(true, "Buscando dato en metadata...");
 	Nodo<Metadata>* actual = metadata->getPrimer();
 	while (actual != 0) {
@@ -53,21 +53,21 @@ int vHeap::busquedaDato(int id) {
 			actual = actual->getSiguiente();
 	}
 	deb->print(false, "Dato NO encontrado.");
-	pthread_mutex_unlock(&mutex);
-	pthread_exit(0);
+	//pthread_mutex_unlock(&mutex);
+	//pthread_exit(0);
 	return -1;
 }
 
 Metadata* vHeap::getMetadata(vRef ref) {
-	pthread_mutex_lock(&mutex);
+	//pthread_mutex_lock(&mutex);
 	int indice = busquedaDato(ref.getID());
 	if (indice != -1) {
-		pthread_mutex_unlock(&mutex);
-		pthread_exit(0);
+		//pthread_mutex_unlock(&mutex);
+		//pthread_exit(0);
 		return metadata->getElemento(indice)->getDato();
 	} else {
-		pthread_mutex_unlock(&mutex);
-		pthread_exit(0);
+		//pthread_mutex_unlock(&mutex);
+		//pthread_exit(0);
 		return 0;
 	}
 }
@@ -78,27 +78,27 @@ Metadata* vHeap::getMetadata(vRef ref) {
  * 	@param tipo Tipo de dato a almacenar
  */
 vRef vHeap::vMalloc(int size, char tipo) {
-	pthread_mutex_lock(&mutex);
+	//pthread_mutex_lock(&mutex);
 	deb->print(true, "vMalloc...");
 	*contador = *contador + 1;
 	Metadata* meta = new Metadata(*contador, desplazamiento, tipo, size);
 
 	metadata->insertarFinal(*meta);
-	memset(desplazamiento, 0, size);
+	memset(desplazamiento, '0', size);
 
 	desplazamiento = desplazamiento + size;
 	deb->print(false, "Espacio creado satisfactoriamente.");
-	pthread_mutex_unlock(&mutex);
-	pthread_exit(0);
+	//pthread_mutex_unlock(&mutex);
+	//pthread_exit(0);
 	return vRef(*contador);
 }
 
 void vHeap::vFree(vRef ref) {
-	pthread_mutex_lock(&mutex);
+	//pthread_mutex_lock(&mutex);
 	int indice = busquedaDato(ref.getID());
 	metadata->borrarElemento(indice);
 	deb->print(true, "Espacio de memoria liberado");
-	pthread_mutex_unlock(&mutex);
+	//pthread_mutex_unlock(&mutex);
 }
 
 /**

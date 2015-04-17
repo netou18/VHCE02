@@ -1,17 +1,14 @@
-/*
- * vObject.h
- *
- *  Created on: 10/4/2015
- *      Author: ernesto
- */
 
 #ifndef SRC_VOBJECTS_VOBJECT_H_
 #define SRC_VOBJECTS_VOBJECT_H_
 
 class vObject {
+protected:
+	int tamano;
 public:
 	vObject();
 	~vObject();
+	int getTamano();
 };
 
 #endif /* SRC_VOBJECTS_VOBJECT_H_ */

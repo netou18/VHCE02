@@ -46,6 +46,18 @@ Ernesto Ulate Ramírez 2014092260
 	Creación de la documentación del proyecto.
 	Creación de diagrama clases.
 	Estructuración de bitácoras.
+14/4/15
+	Terminar documentación.
+	Terminar diagrama de clases.
+	Revisión del código.
+	Envío de correo al profesor.
+15/4/15
+	Errores en instancias del vHeap.
+	Depuración de errores.
+	Completar clase vObject con las clases que heredan.
+16/4/15
+	Continuación con clases vObject.
+	vChar completado. vInt completado.
 	
 	
 	
