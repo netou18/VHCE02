@@ -1,12 +1,17 @@
 #ifndef SRC_VOBJECTS_VCHAR_H_
 #define SRC_VOBJECTS_VCHAR_H_
-#include "vObject.h"
 #include "../vheap/vHeap.h"
+#include "../vheap/vRef.h"
+
+class vObject {
+protected:
+	int tamano;
+	vRef ref;
+};
 
 class vChar: public vObject {
 private:
 	char* pos;
-	vRef ref;
 	vHeap* heap;
 public:
 	vChar();
@@ -16,6 +21,7 @@ public:
 	void operator=(char c);
 	vRef operator&();
 	char getData();
+	void updatevRef(vRef r);
 };
 
 #endif /* SRC_VOBJECTS_VCHAR_H_ */

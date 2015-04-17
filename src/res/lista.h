@@ -6,7 +6,6 @@
 #include "nodo.h"
 using namespace std;
 
-
 /**
  * 		Lista doblemente enlazada
  */
@@ -87,6 +86,7 @@ template<class T> void Lista<T>::insertarInicio(T dato) {
 }
 
 template<class T> void Lista<T>::borrarElemento(int ind) {
+	cout << "borrar: " << ind << endl;
 	Nodo<T>* actual = primer;
 	while (actual != 0) {
 		if (((int) actual->getIndice()) != ind) {
@@ -94,9 +94,11 @@ template<class T> void Lista<T>::borrarElemento(int ind) {
 		} else {
 			resInd(actual->getSiguiente());
 			Nodo<T>* aux = actual->getAnterior();
-			aux->setSiguiente(actual->getSiguiente());
+			if(aux != 0)
+				aux->setSiguiente(actual->getSiguiente());
 			aux = actual->getSiguiente();
-			aux->setAnterior(actual->getAnterior());
+			if(aux != 0)
+				aux->setAnterior(actual->getAnterior());
 			break;
 		}
 	}
@@ -135,7 +137,7 @@ template<class T> Nodo<T>* Lista<T>::getUltimo() {
 template<class T> Nodo<T>* Lista<T>::getElemento(int ind) {
 	Nodo<T>* actual = primer;
 	while (actual != 0) {
-		if(actual->getIndice()!=ind)
+		if (actual->getIndice() != ind)
 			actual = actual->getSiguiente();
 		else
 			return actual;

@@ -1,8 +1,8 @@
 #ifndef SRC_VHEAP_VREF_H_
 #define SRC_VHEAP_VREF_H_
-#include "../vobjects/vObject.h"
 
 class vHeap;
+class vObject;
 
 class vRef {
 private:

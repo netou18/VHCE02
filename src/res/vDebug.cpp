@@ -25,7 +25,7 @@ void vDebug::print(bool enter, string msg) {
 void vDebug::print(bool enter, string msg, int num) {
 	if (activo) {
 		if (!enter)
-			fs << msg << endl;
+			fs << msg << num << endl;
 		else
 			fs << "\n" + msg << num << endl;
 	}

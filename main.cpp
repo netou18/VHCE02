@@ -22,7 +22,6 @@ int main() {
 //	*p = c;
 //	cout << p << ": " << *p << endl;
 
-
 //	pthread_t hilo;
 //	int num = 2;
 //	cout << "Creando pthread..." << endl;
@@ -40,14 +39,24 @@ int main() {
 	char tipo = 'a';
 
 	vRef ref1 = heap->vMalloc(10, tipo);
-//	vRef ref2 = heap->vMalloc(100, tipo);
-//	vRef ref3 = heap->vMalloc(500, tipo);
+	vRef ref2 = heap->vMalloc(100, tipo);
+	vRef ref3 = heap->vMalloc(500, tipo);
 
 	vChar car = 'a';
+	cout << "ref1: " << ref1.getID() << endl;
+	cout << "car: " << (&car).getID() << endl;
+	cout << "ref3: " << ref3.getID() << endl;
+	cout << "ref2: " << ref2.getID() << endl;
+
 	//car = 'a';
 	ref1 = car;
 
-	//Metadata* meta = heap->getMetadata(ref1);
+	Metadata* meta = heap->getMetadata(&car);
+	cout << endl;
+	cout << "ID: " << meta->getID() << endl;
+	cout << "Tamano: " << meta->getTamano() << endl;
+	cout << "Posicion: " << meta->getPos() << endl;
+	cout << endl;
 	//Metadata* meta1 = heap->getMetadata(ref2);
 	//Metadata* meta2 = heap->getMetadata(ref3);
 
@@ -56,12 +65,9 @@ int main() {
 	//meta = heap->getMetadata(ref1);
 	//meta1 = heap->getMetadata(ref2);
 	//meta2 = heap->getMetadata(ref3);
-	vChar obj;
-	cout << "aqui." << endl;
+	//vChar obj;
 	//obj = (char)((vChar*)(*ref1))->getData();
-	obj = car.getData();
-	cout << "aqui." << endl;
-	cout << "car: " << obj.getData() << endl;
+	//cout << "car: " << obj.getTamano() << endl;
 
 	deb->print(false, "**************************");
 	deb->print(false, "Termina.");

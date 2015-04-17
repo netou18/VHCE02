@@ -87,7 +87,8 @@ vRef vHeap::vMalloc(int size, char tipo) {
 	memset(desplazamiento, '0', size);
 
 	desplazamiento = desplazamiento + size;
-	deb->print(false, "Espacio creado satisfactoriamente.");
+	deb->print(false, "Espacio creado satisfactoriamente. ID(vRef): ",
+			*contador);
 	//pthread_mutex_unlock(&mutex);
 	//pthread_exit(0);
 	return vRef(*contador);
@@ -95,10 +96,24 @@ vRef vHeap::vMalloc(int size, char tipo) {
 
 void vHeap::vFree(vRef ref) {
 	//pthread_mutex_lock(&mutex);
+
 	int indice = busquedaDato(ref.getID());
+	cout << "vFree: " << indice << endl;
 	metadata->borrarElemento(indice);
 	deb->print(true, "Espacio de memoria liberado");
 	//pthread_mutex_unlock(&mutex);
+}
+
+void vHeap::vFree(int ind) {
+	//pthread_mutex_lock(&mutex);
+
+	metadata->borrarElemento(ind);
+	deb->print(true, "Espacio de memoria liberado");
+	//pthread_mutex_unlock(&mutex);
+}
+
+Lista<Metadata>* vHeap::getDatos() {
+	return metadata;
 }
 
 /**

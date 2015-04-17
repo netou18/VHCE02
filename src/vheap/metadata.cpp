@@ -30,7 +30,6 @@ Metadata::Metadata(int id, void* pos, char t, int tam) {
 //	free(posicion);
 //	free(tamano);
 //}
-
 /**
  * 	@brief Obtener identificador
  */
@@ -59,10 +58,34 @@ int Metadata::getTamano() {
 	return tamano;
 }
 
+void Metadata::setUso(bool b) {
+	bandera = b;
+}
+
+bool Metadata::getUso(){
+	return bandera;
+}
+
+int Metadata::getContador(){
+	return contador;
+}
+
+void Metadata::aumentaContador(){
+	contador+=1;
+}
+
+void Metadata::disminuyeContador(){
+	contador-=1;
+}
+
 /**
  * 	@brief Actualizar posicion
  * 	@param pos Puntero de posicion
  */
 void Metadata::updatePos(void* pos) {
 	posicion = pos;
+}
+
+void Metadata::updateID(int id) {
+	ID = id;
 }

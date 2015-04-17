@@ -18,6 +18,12 @@ public:
 	char getTipo();									//Obtener tipo
 	int getTamano();									//Obtener tamano
 	void updatePos(void* pos);				//Actualiza la posicion en memoria
+	void updateID(int id);
+	void setUso(bool b);
+	bool getUso();
+	int getContador();
+	void aumentaContador();
+	void disminuyeContador();
 };
 
 #endif /* SRC_VHEAP_METADATA_H_ */

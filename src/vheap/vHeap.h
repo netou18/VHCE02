@@ -24,10 +24,10 @@ public:
 	~vHeap();									//Destructor
 	vRef vMalloc(int size, char type);			//Malloc virtualizado
 	void vFree(vRef ref);					//Liberador de memoria virtualizado
+	void vFree(int ind);
 	int busquedaDato(int id);					//Busca el indice del Metadata
 	Metadata* getMetadata(vRef ref);			//Obtener el Metadata
-	void aumentarContador(int id);				//Aumenta contador de referencia
-	void disminuirContador(int id);			//Disminuye contador de referencia
+	Lista<Metadata>* getDatos();
 	static vHeap* getInstance() {				//
 		if (instancia == 0)						//Patron singleton
 			instancia = new vHeap();			//
