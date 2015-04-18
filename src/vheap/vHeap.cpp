@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <cstring>
 #include <pthread.h>
+#include <time.h>
 #include "../vheap/metadata.h"
 using namespace std;
 
@@ -31,6 +32,9 @@ vHeap::vHeap() {
 	posFinal = memoria + (size * 1000000);
 	metadata = (Lista<Metadata>*) malloc(sizeof(Lista<Metadata> ));
 	new (metadata) Lista<Metadata>();
+	pthread_t collector, defragger;
+	pthread_create(&collector, 0, recolector, 0);
+	pthread_create(&defragger, 0, desfragmentar, 0);
 	deb->print(false, "vHeap creado.*");
 }
 
@@ -123,12 +127,12 @@ vHeap::~vHeap() {
 void* vHeap::recolector(void* var) {
 	while (true) {
 		struct timespec timer, timer2;
-		timer.tv_sec = 5;
+		timer.tv_sec = 20;
 		timer.tv_nsec = 0;
 
 		nanosleep(&timer, &timer2);
 
-		cout << "Recolectando basura" << endl;
+		runGarbage();
 	}
 	return 0;
 }
@@ -144,17 +148,18 @@ void vHeap::runGarbage() {
 			heap->vFree(actual->getIndice());
 		}
 	}
+	cout << "Recolector finalizado." << endl;
 }
 
 void* vHeap::desfragmentar(void* var) {
 	while (true) {
 		struct timespec timer, timer2;
-		timer.tv_sec = 3;
+		timer.tv_sec = 60;
 		timer.tv_nsec = 0;
 
 		nanosleep(&timer, &timer2);
 
-		cout << "Desfragmentando" << endl;
+		runDefrag();
 	}
 	return 0;
 }
@@ -173,11 +178,18 @@ bool buscar(void* posicion, Nodo<Metadata>* actual) {
 void mover(void* posicion, int size, Nodo<Metadata>* actual) {
 	while (actual != 0) {
 		Metadata* aux = actual->getDato();
-		if (aux->getTamano() < size) {
-			memmove(posicion, aux->getPos(), size);
+		if (aux->getPos() > posicion) {
+
+			if (aux->getTamano() < size) {
+				memmove(posicion, aux->getPos(), size);
+				aux->updatePos(posicion);
+			}
+			else
+				actual = actual->getSiguiente();
 		}
-		else
+		else {
 			actual = actual->getSiguiente();
+		}
 	}
 }
 
@@ -203,6 +215,8 @@ void vHeap::runDefrag() {
 			posicion += 1;
 		}
 	}
+
+	cout << "Memoria desfragmentada" << endl;
 
 }
 

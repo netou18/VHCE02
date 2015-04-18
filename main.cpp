@@ -60,21 +60,22 @@ int main() {
 	vRef ref2 = heap->vMalloc(100, tipo);
 	vRef ref3 = heap->vMalloc(500, tipo);
 
-	vChar car = 'a';
+	//vChar car = 'a';
 	cout << "ref1: " << ref1.getID() << endl;
-	cout << "car: " << (&car).getID() << endl;
+	//cout << "car: " << (&car).getID() << endl;
 	cout << "ref3: " << ref3.getID() << endl;
 	cout << "ref2: " << ref2.getID() << endl;
 
+	heap->vFree(ref2);
 	//car = 'a';
-	ref1 = car;
+	//ref1 = car;
 
-	Metadata* meta = heap->getMetadata(&car);
-	cout << endl;
-	cout << "ID: " << meta->getID() << endl;
-	cout << "Tamano: " << meta->getTamano() << endl;
-	cout << "Posicion: " << meta->getPos() << endl;
-	cout << endl;
+	//Metadata* meta = heap->getMetadata(&car);
+	//cout << endl;
+	//cout << "ID: " << meta->getID() << endl;
+	//cout << "Tamano: " << meta->getTamano() << endl;
+	//cout << "Posicion: " << meta->getPos() << endl;
+	//cout << endl;
 	//Metadata* meta1 = heap->getMetadata(ref2);
 	//Metadata* meta2 = heap->getMetadata(ref3);
 
@@ -86,6 +87,15 @@ int main() {
 	//vChar obj;
 	//obj = (char)((vChar*)(*ref1))->getData();
 	//cout << "car: " << obj.getTamano() << endl;
+
+	while (true) {
+		struct timespec timer, timer2;
+		timer.tv_sec = 5;
+		timer.tv_nsec = 0;
+
+		nanosleep(&timer, &timer2);
+
+	}
 
 	deb->print(false, "**************************");
 	deb->print(false, "Termina.");
