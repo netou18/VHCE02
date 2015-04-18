@@ -110,10 +110,6 @@ void vHeap::vFree(int ind) {
 	//pthread_mutex_unlock(&mutex);
 }
 
-Lista<Metadata>* vHeap::getDatos() {
-	return metadata;
-}
-
 /**
  * 	@brief Destructor
  */
@@ -122,5 +118,91 @@ vHeap::~vHeap() {
 	free(memoria);
 	free(desplazamiento);
 	free(metadata);
+}
+
+void* vHeap::recolector(void* var) {
+	while (true) {
+		struct timespec timer, timer2;
+		timer.tv_sec = 5;
+		timer.tv_nsec = 0;
+
+		nanosleep(&timer, &timer2);
+
+		cout << "Recolectando basura" << endl;
+	}
+	return 0;
+}
+
+void vHeap::runGarbage() {
+	vHeap* heap = vHeap::getInstance();
+	Nodo<Metadata>* actual = heap->metadata->getPrimer();
+	while (actual != 0) {
+		Metadata* aux = actual->getDato();
+		if (aux->getUso() || (aux->getContador() > 0)) {
+			actual = actual->getSiguiente();
+		} else {
+			heap->vFree(actual->getIndice());
+		}
+	}
+}
+
+void* vHeap::desfragmentar(void* var) {
+	while (true) {
+		struct timespec timer, timer2;
+		timer.tv_sec = 3;
+		timer.tv_nsec = 0;
+
+		nanosleep(&timer, &timer2);
+
+		cout << "Desfragmentando" << endl;
+	}
+	return 0;
+}
+
+bool buscar(void* posicion, Nodo<Metadata>* actual) {
+	while (actual != 0) {
+		Metadata* aux = actual->getDato();
+		if (posicion >= aux->getPos() || posicion <= (aux->getPos() + aux->getTamano()))
+			return true;
+		else
+			actual = actual->getSiguiente();
+	}
+	return false;
+}
+
+void mover(void* posicion, int size, Nodo<Metadata>* actual) {
+	while (actual != 0) {
+		Metadata* aux = actual->getDato();
+		if (aux->getTamano() < size) {
+			memmove(posicion, aux->getPos(), size);
+		}
+		else
+			actual = actual->getSiguiente();
+	}
+}
+
+void vHeap::runDefrag() {
+	vHeap* heap = vHeap::getInstance();
+	void* posicion = heap->memoria;
+	void* temporal = 0;
+	void* posFinal = heap->posFinal;
+	int tamanoHueco = 0;
+	Nodo<Metadata>* actual = heap->metadata->getPrimer();
+	while (posicion <= posFinal) {
+		if (buscar(posicion, actual)) {
+			if (tamanoHueco > 0) {
+				mover(temporal, tamanoHueco, actual);
+				temporal = 0;
+				tamanoHueco = 0;
+			}
+			posicion += 1;
+		}
+		else {
+			temporal = posicion;
+			tamanoHueco += 1;
+			posicion += 1;
+		}
+	}
+
 }
 

@@ -1,5 +1,6 @@
 #include <iostream>
 #include <pthread.h>
+#include <time.h>
 #include "src/res/vDebug.h"
 #include "src/xml/reader.h"
 #include "src/vheap/metadata.h"
@@ -13,17 +14,34 @@ void* foo(void* var) {
 	return 0;
 }
 
+void* foo1(void* var) {
+
+	while (true) {
+		cout << "soy while" << endl;
+		struct timespec timer, timer2;
+		timer.tv_sec = 3;
+		timer.tv_nsec = 0;
+
+		nanosleep(&timer, &timer2);
+	}
+	return 0;
+}
+
 int main() {
 
 	cout << "Programa " << endl;
 
-//	char* p = (char*)malloc(sizeof(char));
+//	char* p = (char*) malloc(sizeof(char));
 //	char c = 'a';
 //	*p = c;
 //	cout << p << ": " << *p << endl;
-
+//
 //	pthread_t hilo;
 //	int num = 2;
+//	cout << "Creando pthread..." << endl;
+//	pthread_create(&hilo, 0, foo1, &num);
+//	cout << "continue" << endl;
+//	num = 3;
 //	cout << "Creando pthread..." << endl;
 //	pthread_create(&hilo, 0, foo, &num);
 //

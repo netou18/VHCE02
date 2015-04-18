@@ -11,19 +11,25 @@
 using namespace std;
 
 class Defrag;
+class vGarbageCollector;
 
 class vHeap {
-private:
-	vHeap();									//Constructor principal
-	static vHeap* instancia;					//Instancia unica del vHeap
+protected:
 	int* contador;								//Contador de identificadores
 	void* memoria;								//Puntero a vHeap
 	void* desplazamiento;						//Posicion del puntero
 	void* posFinal;
 	Lista<Metadata>* metadata;					//Metadata
+private:
+	vHeap();									//Constructor principal
+	static vHeap* instancia;					//Instancia unica del vHeap
 	Reader* read;
 	vDebug* deb;
-public:
+	static void* recolector(void* var);
+	static void runGarbage();
+	static void* desfragmentar(void* var);
+	static void runDefrag();
+	public:
 	~vHeap();									//Destructor
 	vRef vMalloc(int size, char type);			//Malloc virtualizado
 	void vFree(vRef ref);					//Liberador de memoria virtualizado
@@ -31,7 +37,6 @@ public:
 	int busquedaDato(int id);					//Busca el indice del Metadata
 	Metadata* getMetadata(vRef ref);			//Obtener el Metadata
 	Lista<Metadata>* getDatos();
-	friend class Defrag;
 	static vHeap* getInstance() {				//
 		if (instancia == 0)						//Patron singleton
 			instancia = new vHeap();			//
