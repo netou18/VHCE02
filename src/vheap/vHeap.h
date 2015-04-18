@@ -29,6 +29,8 @@ private:
 	static void runGarbage();
 	static void* desfragmentar(void* var);
 	static void runDefrag();
+	static void* printMemoria(void* var);
+	static void printMem();
 	public:
 	~vHeap();									//Destructor
 	vRef vMalloc(int size, char type);			//Malloc virtualizado

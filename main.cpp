@@ -9,24 +9,6 @@
 #include "src/vobjects/vChar.h"
 using namespace std;
 
-void* foo(void* var) {
-	cout << "Soy el hilo: " << *((int*) var) << endl;
-	return 0;
-}
-
-void* foo1(void* var) {
-
-	while (true) {
-		cout << "soy while" << endl;
-		struct timespec timer, timer2;
-		timer.tv_sec = 3;
-		timer.tv_nsec = 0;
-
-		nanosleep(&timer, &timer2);
-	}
-	return 0;
-}
-
 int main() {
 
 	cout << "Programa " << endl;
@@ -57,10 +39,10 @@ int main() {
 	char tipo = 'a';
 
 	vRef ref1 = heap->vMalloc(10, tipo);
-	vRef ref2 = heap->vMalloc(100, tipo);
-	vRef ref3 = heap->vMalloc(500, tipo);
+	vRef ref2 = heap->vMalloc(6, tipo);
+	vRef ref3 = heap->vMalloc(3, tipo);
 
-	//vChar car = 'a';
+	vChar car = 'a';
 	cout << "ref1: " << ref1.getID() << endl;
 	//cout << "car: " << (&car).getID() << endl;
 	cout << "ref3: " << ref3.getID() << endl;
@@ -68,7 +50,7 @@ int main() {
 
 	heap->vFree(ref2);
 	//car = 'a';
-	//ref1 = car;
+	ref1 = car;
 
 	//Metadata* meta = heap->getMetadata(&car);
 	//cout << endl;
