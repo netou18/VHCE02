@@ -44,13 +44,15 @@ int main() {
 
 	vChar car = 'a';
 	cout << "ref1: " << ref1.getID() << endl;
-	//cout << "car: " << (&car).getID() << endl;
 	cout << "ref3: " << ref3.getID() << endl;
 	cout << "ref2: " << ref2.getID() << endl;
 
 	heap->vFree(ref2);
-	//car = 'a';
 	ref1 = car;
+	vObject* prueba = *ref1;
+	Metadata* meta = heap->getMetadata(ref1);
+	cout << "ref1: " << meta->getPos() << endl;
+	cout << "prueba: " << prueba << endl;
 
 	//Metadata* meta = heap->getMetadata(&car);
 	//cout << endl;

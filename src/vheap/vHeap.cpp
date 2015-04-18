@@ -15,6 +15,10 @@ using namespace std;
  * 	@brief Instancia unica del vHeap
  */
 vHeap* vHeap::instancia = 0;
+
+/**
+ * 	@brief Variable global para el mutex
+ */
 pthread_mutex_t mutex;
 
 /**
@@ -45,6 +49,7 @@ vHeap::vHeap() {
 
 /**
  * 	@brief Busca un elemento en el metadata
+ * 	@return Indice posicion del dato en la lista metadata
  */
 int vHeap::busquedaDato(int id) {
 	//pthread_mutex_lock(&mutex);
@@ -66,6 +71,10 @@ int vHeap::busquedaDato(int id) {
 	return -1;
 }
 
+/**
+ * 	@brief Obtener datos de un metadata especifico
+ * 	@return Objeto tipo Metadata con todos los datos
+ */
 Metadata* vHeap::getMetadata(vRef ref) {
 	pthread_mutex_lock(&mutex);
 	int indice = busquedaDato(ref.getID());
@@ -84,6 +93,7 @@ Metadata* vHeap::getMetadata(vRef ref) {
  * 	@brief Virtualizacion del malloc
  * 	@param size Tamano a reservar
  * 	@param tipo Tipo de dato a almacenar
+ * 	@return vRef para localizarlo en memoria
  */
 vRef vHeap::vMalloc(int size, char tipo) {
 	pthread_mutex_lock(&mutex);
@@ -101,16 +111,21 @@ vRef vHeap::vMalloc(int size, char tipo) {
 	return vRef(*contador);
 }
 
+/**
+ * 	@brief Liberador de memoria virtualizado
+ */
 void vHeap::vFree(vRef ref) {
 	pthread_mutex_lock(&mutex);
 
 	int indice = busquedaDato(ref.getID());
-	cout << "vFree: " << indice << endl;
 	metadata->borrarElemento(indice);
 	deb->print(true, "Espacio de memoria liberado");
 	pthread_mutex_unlock(&mutex);
 }
 
+/**
+ * 	@brief Liberador de memoria virtualizado sobrecargado
+ */
 void vHeap::vFree(int ind) {
 	pthread_mutex_lock(&mutex);
 
@@ -129,6 +144,9 @@ vHeap::~vHeap() {
 	free(metadata);
 }
 
+/**
+ * 	@brief Inicia hilo para el vGarbageCollector
+ */
 void* vHeap::recolector(void* var) {
 	vDebug* deb = vDebug::getInstance();
 	while (true) {
@@ -152,6 +170,9 @@ void* vHeap::recolector(void* var) {
 	return 0;
 }
 
+/**
+ * 	@brief Funcion que recolecta y elimina datos innecesarios de la memoria
+ */
 void vHeap::runGarbage() {
 	pthread_mutex_lock(&mutex);
 	vHeap* heap = vHeap::getInstance();
@@ -168,6 +189,9 @@ void vHeap::runGarbage() {
 	pthread_mutex_unlock(&mutex);
 }
 
+/**
+ * 	@brief Inicia el hilo para el desfragmentador de memoria vHeap
+ */
 void* vHeap::desfragmentar(void* var) {
 	vDebug* deb = vDebug::getInstance();
 	while (true) {
@@ -189,6 +213,10 @@ void* vHeap::desfragmentar(void* var) {
 	return 0;
 }
 
+/**
+ * 	@brief Compara posicion en memoria y examina si existe referencia en el metadata
+ * 	@return true o false
+ */
 bool buscar(void* posicion, Nodo<Metadata>* actual) {
 	while (actual != 0) {
 		Metadata* aux = actual->getDato();
@@ -200,6 +228,9 @@ bool buscar(void* posicion, Nodo<Metadata>* actual) {
 	return false;
 }
 
+/**
+ * 	@brief Mueve archivos en memoria de ser necesario para eliminar los "huecos" vacios
+ */
 void mover(void* posicion, int size, Nodo<Metadata>* actual) {
 	while (actual != 0) {
 		Metadata* aux = actual->getDato();
@@ -221,6 +252,9 @@ void mover(void* posicion, int size, Nodo<Metadata>* actual) {
 	}
 }
 
+/**
+ * 	@brief Desfragmentador de memoria
+ */
 void vHeap::runDefrag() {
 	pthread_mutex_lock(&mutex);
 	vHeap* heap = vHeap::getInstance();
@@ -249,6 +283,9 @@ void vHeap::runDefrag() {
 	pthread_mutex_unlock(&mutex);
 }
 
+/**
+ * 	@brief Inicia el hilo para imprimir uso de memoria en consola
+ */
 void* vHeap::printMemoria(void* var) {
 	while (true) {
 		struct timespec timer, timer2;
@@ -261,6 +298,10 @@ void* vHeap::printMemoria(void* var) {
 	}
 	return 0;
 }
+
+/**
+ * 	@brief Imprime uso de memoria en consola
+ */
 void vHeap::printMem() {
 	pthread_mutex_lock(&mutex);
 	vHeap* heap = vHeap::getInstance();

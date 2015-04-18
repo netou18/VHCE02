@@ -10,32 +10,33 @@
 #include "../res/vDebug.h"
 using namespace std;
 
-class Defrag;
-class vGarbageCollector;
-
+/**
+ * 	@class vHeap
+ * 	@brief Crea un heap virtual donde los punteros de manejan de manera distinta
+ */
 class vHeap {
 protected:
 	int* contador;								//Contador de identificadores
 	void* memoria;								//Puntero a vHeap
-	void* desplazamiento;						//Posicion del puntero
-	void* posFinal;
+	void* desplazamiento;						//Posicion inicial del vHeap
+	void* posFinal;								//Posicion final del vHeap
 	Lista<Metadata>* metadata;					//Metadata
 private:
 	vHeap();									//Constructor principal
 	static vHeap* instancia;					//Instancia unica del vHeap
-	Reader* read;
-	vDebug* deb;
-	static void* recolector(void* var);
-	static void runGarbage();
-	static void* desfragmentar(void* var);
-	static void runDefrag();
-	static void* printMemoria(void* var);
-	static void printMem();
-	public:
+	Reader* read;								//Encargada de aportar datos del XML
+	vDebug* deb;								//Encargada de imprimir datos en archivo
+	static void* recolector(void* var);			//Inicia el hilo del vGarbageCollector
+	static void runGarbage();					//
+	static void* desfragmentar(void* var);		//Inicia el hilo del desfragmentador de memoria
+	static void runDefrag();					//
+	static void* printMemoria(void* var);		//Inicia el hilo para imprimir la memoria en consola
+	static void printMem();						//
+public:
 	~vHeap();									//Destructor
 	vRef vMalloc(int size, char type);			//Malloc virtualizado
 	void vFree(vRef ref);					//Liberador de memoria virtualizado
-	void vFree(int ind);
+	void vFree(int ind);						//Liberador de memoria virtualizado
 	int busquedaDato(int id);					//Busca el indice del Metadata
 	Metadata* getMetadata(vRef ref);			//Obtener el Metadata
 	Lista<Metadata>* getDatos();

@@ -7,7 +7,8 @@
 using namespace std;
 
 /**
- * 		Lista doblemente enlazada
+ * 	@class Lista
+ * 	@brief Lista doblemente enlazada
  */
 template<class T> class Lista {
 public:
@@ -19,14 +20,14 @@ public:
 	Nodo<T>* getPrimer();			//Obtener el primer elemento
 	Nodo<T>* getUltimo();			//Obtener el ultimo elemento
 	Nodo<T>* getElemento(int ind);	//Obtener elemento del indice
-	void borrarElemento(int ind);
+	void borrarElemento(int ind);	//Borrar elemento de la lista
 private:
 	Nodo<T>* primer;				//Primer nodo de la lista
 	Nodo<T>* ultimo;				//Ultimo nodo de la lista
 	bool vacia();					//Verifica si esta vacia la lista
-	int contador;
-	void sumInd(Nodo<T>* nodo);
-	void resInd(Nodo<T>* nodo);
+	int contador;					//Contador de elementos
+	void sumInd(Nodo<T>* nodo);		//Suma indices
+	void resInd(Nodo<T>* nodo);		//Resta indices
 };
 
 /**
@@ -85,8 +86,10 @@ template<class T> void Lista<T>::insertarInicio(T dato) {
 	}
 }
 
+/**
+ * 	@brief Borra un elemento de la lista
+ */
 template<class T> void Lista<T>::borrarElemento(int ind) {
-	cout << "borrar: " << ind << endl;
 	Nodo<T>* actual = primer;
 	while (actual != 0) {
 		if (((int) actual->getIndice()) != ind) {
@@ -94,16 +97,19 @@ template<class T> void Lista<T>::borrarElemento(int ind) {
 		} else {
 			resInd(actual->getSiguiente());
 			Nodo<T>* aux = actual->getAnterior();
-			if(aux != 0)
+			if (aux != 0)
 				aux->setSiguiente(actual->getSiguiente());
 			aux = actual->getSiguiente();
-			if(aux != 0)
+			if (aux != 0)
 				aux->setAnterior(actual->getAnterior());
 			break;
 		}
 	}
 }
 
+/**
+ * 	@brief Suma indices desde un nodo
+ */
 template<class T> void Lista<T>::sumInd(Nodo<T>* nodo) {
 	Nodo<T>* actual = nodo;
 	while (actual != 0) {
@@ -112,6 +118,9 @@ template<class T> void Lista<T>::sumInd(Nodo<T>* nodo) {
 	}
 }
 
+/**
+ * 	@brief Resta indices desde un nodo
+ */
 template<class T> void Lista<T>::resInd(Nodo<T>* nodo) {
 	Nodo<T>* actual = nodo;
 	while (actual != 0) {

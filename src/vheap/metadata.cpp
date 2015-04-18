@@ -24,14 +24,12 @@ Metadata::Metadata(int id, void* pos, char t, int tam) {
 /**
  * 	@brief Destructor
  */
-//Metadata::~Metadata() {
-//	free(ID);
-//	//free(tipo);
-//	free(posicion);
-//	free(tamano);
-//}
+Metadata::~Metadata() {
+}
+
 /**
  * 	@brief Obtener identificador
+ * 	@return Identificador
  */
 int Metadata::getID() {
 	return ID;
@@ -39,6 +37,7 @@ int Metadata::getID() {
 
 /**
  * 	@brief Obtener posicion
+ * 	@return Posicion en memoria
  */
 void* Metadata::getPos() {
 	return posicion;
@@ -46,6 +45,7 @@ void* Metadata::getPos() {
 
 /**
  * 	@brief Obtener tipo
+ * 	@return Tipo de dato
  */
 char Metadata::getTipo() {
 	return tipo;
@@ -53,29 +53,48 @@ char Metadata::getTipo() {
 
 /**
  * 	@brief Obtener tamano
+ * 	@return Tamano
  */
 int Metadata::getTamano() {
 	return tamano;
 }
 
+/**
+ * 	@brief Asignar bandera de uso
+ */
 void Metadata::setUso(bool b) {
 	bandera = b;
 }
 
-bool Metadata::getUso(){
+/**
+ * 	@brief Obtener bandera de uso
+ * 	@return Bandera
+ */
+bool Metadata::getUso() {
 	return bandera;
 }
 
-int Metadata::getContador(){
+/**
+ * 	@brief Obtener contador de referencias
+ * 	@return Contador de referencias
+ */
+int Metadata::getContador() {
 	return contador;
 }
 
-void Metadata::aumentaContador(){
-	contador+=1;
+/**
+ * 	@brief Aumenta el contador de referencias
+ */
+void Metadata::aumentaContador() {
+	contador += 1;
 }
 
-void Metadata::disminuyeContador(){
-	contador-=1;
+/**
+ * 	@brief Dismiuye el contador de referencias
+ */
+
+void Metadata::disminuyeContador() {
+	contador -= 1;
 }
 
 /**
@@ -86,6 +105,9 @@ void Metadata::updatePos(void* pos) {
 	posicion = pos;
 }
 
+/**
+ * 	@brief Actualizar identificador
+ */
 void Metadata::updateID(int id) {
 	ID = id;
 }

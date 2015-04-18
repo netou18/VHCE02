@@ -2,17 +2,29 @@
 #include "../xml/reader.h"
 using namespace std;
 
-Reader* xml = Reader::getInstance();
-vDebug* vDebug::instancia = 0;
-ofstream fs(xml->getPath().c_str());
+/**
+ * 	Instancias necesarias
+ */
+Reader* xml = Reader::getInstance();	//Intancia unica del lector de XML
+vDebug* vDebug::instancia = 0;			//Instancia unica singleton
+ofstream fs(xml->getPath().c_str());	//Variable global para escribir en archivo
 
+/**
+ * 	@brief Constructor
+ */
 vDebug::vDebug() {
 	activo = xml->vdebug();
 }
 
+/**
+ * @brief Destructor
+ */
 vDebug::~vDebug() {
 }
 
+/**
+ * 	@brief Imprime en archivo una linea de texto
+ */
 void vDebug::print(bool enter, string msg) {
 	if (activo) {
 		if (!enter)
@@ -22,6 +34,9 @@ void vDebug::print(bool enter, string msg) {
 	}
 }
 
+/**
+ * 	@brief Imprime en archivo una linea de texto
+ */
 void vDebug::print(bool enter, string msg, int num) {
 	if (activo) {
 		if (!enter)

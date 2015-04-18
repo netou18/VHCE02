@@ -4,6 +4,10 @@
 #include <stdlib.h>
 using namespace std;
 
+/**
+ * 	@class Nodo
+ * 	@brief Clase nodo para una lista enlazada
+ */
 template<class T> class Nodo {
 public:
 	Nodo(T dato);									//Constructor
@@ -13,13 +17,13 @@ public:
 	Nodo<T>* getAnterior();							//Obtener nodo anterior
 	void setSiguiente(Nodo* sig);					//Asigna nodo siguiente
 	void setAnterior(Nodo* ant);					//Asigna nodo anterior
-	int getIndice();
-	void setIndice(int num);
+	int getIndice();								//Obtener indice del nodo en la lista enlazada
+	void setIndice(int num);						//Asignar indice del nodo en la lista enlazada
 private:
-	T* atributo;
-	Nodo<T>* anterior;
-	Nodo<T>* siguiente;
-	int indice;
+	T* atributo;									//Dato almacenado en nodo
+	Nodo<T>* anterior;								//Nodo anterior en una lista enlazada
+	Nodo<T>* siguiente;								//Nodo siguiente en una lista enlazada
+	int indice;										//Indice del nodo en ua lista enlazada
 };
 
 /**
@@ -46,7 +50,6 @@ template<class T> T* Nodo<T>::getDato() {
 //template<class T> Nodo<T>::~Nodo() {
 //	delete this;
 //}
-
 /**
  * 	@brief Obtiene el nodo siguiente
  */
@@ -75,11 +78,17 @@ template<class T> Nodo<T>* Nodo<T>::getAnterior() {
 	return anterior;
 }
 
-template<class T> void Nodo<T>::setIndice(int ind){
+/**
+ * 	@brief Asignar indice al nodo en una lista enlazada
+ */
+template<class T> void Nodo<T>::setIndice(int ind) {
 	indice = ind;
 }
 
-template<class T> int Nodo<T>::getIndice(){
+/**
+ * 	@brief Obtener indice del nodo en una lista enlazada
+ */
+template<class T> int Nodo<T>::getIndice() {
 	return indice;
 }
 

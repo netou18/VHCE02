@@ -57,7 +57,22 @@ Ernesto Ulate Ramírez 2014092260
 	Completar clase vObject con las clases que heredan.
 16/4/15
 	Continuación con clases vObject.
-	vChar completado. vInt completado.
+	vChar completado.
+	Inicio con Desfragmentador de memoria y vGarbageCollector
+17/4/15
+	Continuación con el desfragmentador y garbage collector.
+	Investigación sobre hilo: Pthreads.
+	Implementación de Pthreads en C++.
+	Corrección de errores con hilos.
+18/4/15
+	Continuación con los hilos de C++.
+	Hilos funcionando.
+	Visor de memoria por consola. (Sin sockets).
+	Implementación del visor.
+	Prueba. Utilizado para probar el desfragmentador y garbage collector.
+	Parecer funcionar de la forma adecuada.
+	Terminar Paper para la entrega del proyecto.
+	
 	
 	
 	
